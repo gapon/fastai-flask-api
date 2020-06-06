@@ -16,6 +16,12 @@ def get_prediction(img):
     pred_class,pred_idx,outputs = learn.predict(img)
     return str(pred_class), str(pred_idx.item()), str(outputs)
 
+
+@app.route('/')
+def hello_world():
+    return "Hello World!"
+
+
 @app.route('/predict', methods=['POST'])
 def predict():
     if request.method == 'POST':
@@ -28,4 +34,4 @@ def predict():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True, host='0.0.0.0')
