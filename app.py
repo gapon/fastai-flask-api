@@ -19,7 +19,7 @@ def get_prediction(img):
 
 @app.route('/')
 def hello_world():
-    return "Hello World!"
+    return "Test Message"
 
 
 @app.route('/predict', methods=['POST'])
@@ -34,4 +34,4 @@ def predict():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0', port=8080)
