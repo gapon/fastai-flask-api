@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from fastai.vision import *
 import io
 
@@ -17,9 +17,20 @@ def get_prediction(img):
     return str(pred_class), str(pred_idx.item()), str(outputs)
 
 
-@app.route('/')
-def hello_world():
-    return "Test Message"
+#@app.route('/')
+#def hello_world():
+#    return "Test Message"
+
+@app.route('/', methods=['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        file = request.files['file']
+        img_bytes = file.read()
+        img = get_image(img_bytes)
+        pred_class,pred_idx,outputs = get_prediction(img)
+        #return jsonify({'class_name': pred_class, 'class_id': pred_idx, 'outputs': outputs})
+        return render_template('result.html', class_id=pred_idx, class_name=pred_class, outputs=outputs)
+    return render_template('index.html')
 
 
 @app.route('/predict', methods=['POST'])
